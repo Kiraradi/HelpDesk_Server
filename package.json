@@ -1,0 +1,31 @@
+{
+  "name": "helpdesk_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever server.js",
+    "wath": "forever -w server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiraradi/HelpDesk_Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kiraradi/HelpDesk_Server/issues"
+  },
+  "homepage": "https://github.com/Kiraradi/HelpDesk_Server#readme",
+  "dependencies": {
+    "forever": "^4.0.3",
+    "koa": "^2.14.2",
+    "koa-body": "^6.0.1",
+    "koa-static": "^5.0.0",
+    "moment": "^2.29.4",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
