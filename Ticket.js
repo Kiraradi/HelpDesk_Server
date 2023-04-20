@@ -7,6 +7,6 @@ exports.default = class Ticket {
         this.name = name;
         this.description = description;
         this.status = false;
-        this.created = moment().format('DD MMMM YYYY, h:mm');
+        this.created = moment().format('DD.MM.YY hh:mm');
     }
 }

@@ -42,20 +42,19 @@ app.use((ctx, next) => {
     next();
 });
 
-// middleware добавляет в массив новый тикет 
+// middleware добавляет в массив новый тикет и отправляет его на front
 app.use((ctx, next) => {
+    
     if (ctx.request.method !== 'POST') {
       next();
       return;
     }
-    
-    const { name, description } = ctx.request.body;
+    const {shortDescription, detailedDescription } = JSON.parse(ctx.request.body);
     ctx.response.set('Access-Control-Allow-Origin', '*');
-    const ticket = new Ticket(name, description)
+    const ticket = new Ticket(shortDescription, detailedDescription )
     tickets.push(ticket);
   
-    ctx.response.body = 'OK';
-  
+    ctx.response.body = JSON.stringify(ticket) ;
     next();
 });
 // middleware удаляет из массива Тикетов 
@@ -71,7 +70,7 @@ app.use((ctx, next) => {
     if (deletedTicketIndex >= 0) {
         tickets.splice(deletedTicketIndex, 1);
     }
-
+    console.log(tickets)
     ctx.response.set('Access-Control-Allow-Origin', '*');
     ctx.response.body = 'OK';
   
