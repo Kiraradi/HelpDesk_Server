@@ -49,11 +49,11 @@ app.use((ctx, next) => {
       next();
       return;
     }
+
     const {shortDescription, detailedDescription } = JSON.parse(ctx.request.body);
     ctx.response.set('Access-Control-Allow-Origin', '*');
     const ticket = new Ticket(shortDescription, detailedDescription )
     tickets.push(ticket);
-  
     ctx.response.body = JSON.stringify(ticket) ;
     next();
 });
@@ -70,12 +70,34 @@ app.use((ctx, next) => {
     if (deletedTicketIndex >= 0) {
         tickets.splice(deletedTicketIndex, 1);
     }
-    console.log(tickets)
+
     ctx.response.set('Access-Control-Allow-Origin', '*');
     ctx.response.body = 'OK';
   
     next()
-})
+});
+
+//middleware изменяет тикет в массиве 
+
+app.use((ctx, next) => {
+    if(ctx.request.method !== 'PUT' && ctx.request.query.method !== 'change') {
+        next();
+        return;
+    }
+
+    const ticket = JSON.parse(ctx.request.body);
+
+    const changeableTicketIndex = tickets.findIndex(el => el.id == ticket.id);
+
+    if (changeableTicketIndex >= 0) {
+        tickets[changeableTicketIndex] = ticket;
+    }
+    
+    ctx.response.set('Access-Control-Allow-Origin', '*');
+    ctx.response.body = 'OK';
+  
+    next()
+});
 
 
 const server = http.createServer(app.callback());
